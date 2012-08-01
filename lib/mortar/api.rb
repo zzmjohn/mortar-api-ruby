@@ -12,7 +12,6 @@ end
 require "mortar/api/vendor/okjson"
 
 require "mortar/api/errors"
-require "mortar/api/mock"
 require "mortar/api/version"
 
 srand
