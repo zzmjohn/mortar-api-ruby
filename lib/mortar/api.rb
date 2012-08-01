@@ -14,6 +14,8 @@ require "mortar/api/vendor/okjson"
 require "mortar/api/errors"
 require "mortar/api/version"
 
+require "mortar/api/illustrate"
+
 srand
 
 module Mortar
@@ -35,8 +37,7 @@ module Mortar
         'Accept-Encoding'       => 'gzip',
         #'Accept-Language'       => 'en-US, en;q=0.8',
         'Authorization'         => "Basic #{Base64.encode64(user_pass).gsub("\n", '')}",
-        'User-Agent'            => "mortar-rb/#{Mortar::API::VERSION}",
-        'X-Mortar-API-Version'  => '2',
+        'User-Agent'            => "mortar-api-ruby/#{Mortar::API::VERSION}",
         'X-Ruby-Version'        => RUBY_VERSION,
         'X-Ruby-Platform'       => RUBY_PLATFORM
       }.merge(options[:headers])
@@ -81,11 +82,18 @@ module Mortar
       response
     end
 
-    private
+    protected
+
+    def json_encode(object)
+      Mortar::API::OkJson.encode(object)
+    end
 
     def escape(string)
       CGI.escape(string).gsub('.', '%2E')
     end
 
+    def versioned_path(resource)
+      "/v#{SERVER_API_VERSION}/#{resource}"
+    end
   end
 end
