@@ -35,6 +35,7 @@ module Mortar
       options[:headers] = {
         'Accept'                => 'application/json',
         'Accept-Encoding'       => 'gzip',
+        'Content-Type'          => 'application/json',
         #'Accept-Language'       => 'en-US, en;q=0.8',
         'Authorization'         => "Basic #{Base64.encode64(user_pass).gsub("\n", '')}",
         'User-Agent'            => "mortar-api-ruby/#{Mortar::API::VERSION}",
