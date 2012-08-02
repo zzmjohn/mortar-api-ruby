@@ -20,7 +20,9 @@ srand
 
 module Mortar
   class API
-
+    
+    attr_reader :connection
+    
     def initialize(options={})
       #@api_key = options.delete(:api_key) || ENV['MORTAR_API_KEY']
       #user_pass = ":#{@api_key}"
@@ -83,6 +85,11 @@ module Mortar
       response
     end
 
+    def versioned_path(resource)
+      no_slash_resource = resource.start_with?("/") ? resource[1,resource.size] : resource
+      "/v#{SERVER_API_VERSION}/#{no_slash_resource}"
+    end
+    
     protected
 
     def json_encode(object)
@@ -93,9 +100,5 @@ module Mortar
       CGI.escape(string).gsub('.', '%2E')
     end
 
-    def versioned_path(resource)
-      no_slash_resource = resource.start_with?("/") ? resource[1,resource.size] : resource
-      "/v#{SERVER_API_VERSION}/#{no_slash_resource}"
-    end
   end
 end

@@ -41,7 +41,7 @@ module Mortar
         :method   => :post,
         :path     => versioned_path("/illustrates"),
         :body     => json_encode({"project_name" => project_name,
-                                  "pigscript_name" => "#{pigscript}",
+                                  "pigscript_name" => pigscript,
                                   "alias" => pigscript_alias,
                                   "git_ref" => git_ref})
       )

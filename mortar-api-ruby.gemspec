@@ -20,7 +20,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_runtime_dependency 'excon', '~>0.15.4'
-
-  gem.add_development_dependency 'minitest'
+  
   gem.add_development_dependency 'rake'
+  gem.add_development_dependency "rr"
+  gem.add_development_dependency "rspec"
+  
 end

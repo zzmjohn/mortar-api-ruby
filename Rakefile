@@ -1,10 +1,14 @@
+require "rubygems"
 require "bundler/gem_tasks"
 
-require 'rake/testtask'
+PROJECT_ROOT = File.expand_path("..", __FILE__)
+$:.unshift "#{PROJECT_ROOT}/lib"
 
-task :default => :test
+require "rspec/core/rake_task"
 
-Rake::TestTask.new do |task|
-  task.name = :test
-  task.test_files = FileList['test/test*.rb']
+desc "Run all specs"
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.verbose = true
 end
+
+task :default => :spec
