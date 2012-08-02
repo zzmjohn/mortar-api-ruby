@@ -93,7 +93,8 @@ module Mortar
     end
 
     def versioned_path(resource)
-      "/v#{SERVER_API_VERSION}/#{resource}"
+      no_slash_resource = resource.start_with?("/") ? resource[1,resource.size] : resource
+      "/v#{SERVER_API_VERSION}/#{no_slash_resource}"
     end
   end
 end
