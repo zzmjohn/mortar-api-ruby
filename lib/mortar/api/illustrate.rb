@@ -25,23 +25,23 @@ module Mortar
                                         STATUS_KILLED])
     end
     
-    # GET /vX/illustrate/:illustrate
+    # GET /vX/illustrates/:illustrate
     def get_illustrate(illustrate_id)
       request(
         :expects  => 200,
         :method   => :get,
-        :path     => versioned_path("/illustrate/#{illustrate_id}")
+        :path     => versioned_path("/illustrates/#{illustrate_id}")
       )
     end
     
-    # POST /vX/illustrate
+    # POST /vX/illustrates
     def post_illustrate(project_name, pigscript, pigscript_alias, git_ref)
       request(
         :expects  => 200,
         :method   => :post,
-        :path     => versioned_path("/illustrate"),
-        :body     => json_encode({"project" => project_name,
-                                  "pigscript" => pigscript,
+        :path     => versioned_path("/illustrates"),
+        :body     => json_encode({"project_name" => project_name,
+                                  "pigscript_name" => "#{pigscript}",
                                   "alias" => pigscript_alias,
                                   "git_ref" => git_ref})
       )
