@@ -26,11 +26,13 @@ module Mortar
     end
     
     # GET /vX/illustrates/:illustrate
-    def get_illustrate(illustrate_id)
+    def get_illustrate(illustrate_id, options = {})
+      exclude_result = options[:exclude_result] || false
       request(
         :expects  => 200,
         :method   => :get,
-        :path     => versioned_path("/illustrates/#{illustrate_id}")
+        :path     => versioned_path("/illustrates/#{illustrate_id}"),
+        :query    => {:exclude_result => exclude_result}
       )
     end
     
