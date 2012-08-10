@@ -15,6 +15,7 @@ require "mortar/api/errors"
 require "mortar/api/version"
 
 require "mortar/api/illustrate"
+require "mortar/api/jobs"
 
 srand
 
