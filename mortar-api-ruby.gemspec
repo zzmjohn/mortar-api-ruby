@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.summary     = "Client for Mortar API"
   gem.description = "Client for Mortar API."
   gem.platform    = Gem::Platform::RUBY
-  gem.required_ruby_version = '>=1.9'
+  gem.required_ruby_version = '>=1.8.7'
 
   gem.files         = `git ls-files`.split("\n")
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
