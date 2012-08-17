@@ -5,6 +5,7 @@ module Mortar
     module Illustrate
 
       STATUS_QUEUED           = "QUEUED"
+      STATUS_GATEWAY_STARTING = "GATEWAY_STARTING"
       STATUS_PROGRESS         = "PROGRESS"
       STATUS_BUILDING_PLAN    = "BUILDING_PLAN"
       STATUS_READING_DATA     = "READING_DATA"
@@ -15,6 +16,7 @@ module Mortar
       STATUS_KILLED           = "KILLED"
 
       STATUSES_IN_PROGRESS    = Set.new([STATUS_QUEUED, 
+                                         STATUS_GATEWAY_STARTING,
                                          STATUS_PROGRESS, 
                                          STATUS_BUILDING_PLAN, 
                                          STATUS_READING_DATA, 
