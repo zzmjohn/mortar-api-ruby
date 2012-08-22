@@ -18,6 +18,7 @@ require "mortar/api/version"
 require "mortar/api/illustrate"
 require "mortar/api/jobs"
 require "mortar/api/login"
+require "mortar/api/projects"
 require "mortar/api/user"
 
 srand
