@@ -1,4 +1,3 @@
-require "base64"
 require "excon"
 require "securerandom"
 require "uri"
@@ -11,25 +10,28 @@ end
 
 require "mortar/api/vendor/okjson"
 
+
+require "mortar/api/basicauth"
 require "mortar/api/errors"
 require "mortar/api/version"
 
 require "mortar/api/illustrate"
 require "mortar/api/jobs"
+require "mortar/api/login"
+require "mortar/api/user"
 
 srand
 
 module Mortar
   class API
     
+    include Mortar::API::BasicAuth
+    
     attr_reader :connection
     
     def initialize(options={})
-      #@api_key = options.delete(:api_key) || ENV['MORTAR_API_KEY']
-      #user_pass = ":#{@api_key}"
       user = options.delete(:user)
-      password = options.delete(:password)
-      user_pass = "#{user}:#{password}"
+      api_key = options.delete(:api_key) || ENV['MORTAR_API_KEY']
       options = {
         :headers  => {},
         :host     => 'api.mortardata.com',
@@ -40,7 +42,7 @@ module Mortar
         'Accept-Encoding'       => 'gzip',
         'Content-Type'          => 'application/json',
         #'Accept-Language'       => 'en-US, en;q=0.8',
-        'Authorization'         => "Basic #{Base64.encode64(user_pass).gsub("\n", '')}",
+        'Authorization'         => basic_auth_authorization_header(user, api_key),
         'User-Agent'            => "mortar-api-ruby/#{Mortar::API::VERSION}",
         'X-Ruby-Version'        => RUBY_VERSION,
         'X-Ruby-Platform'       => RUBY_PLATFORM
