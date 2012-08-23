@@ -20,14 +20,16 @@ describe Mortar::API do
       pigscript_name = "my_pigscript"
       pigscript_alias = "my_alias"
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
+      parameters = {"key" => "value"}
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
                                          "pigscript_name" => pigscript_name,
                                          "alias" => pigscript_alias,
-                                         "git_ref" => git_ref})
+                                         "git_ref" => git_ref,
+                                         "parameters" => parameters})
       Excon.stub({:method => :post, :path => "/v2/illustrates", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'illustrate_id' => illustrate_id}), :status => 200}
       end
-      response = @api.post_illustrate(project_name, pigscript_name, pigscript_alias, git_ref)
+      response = @api.post_illustrate(project_name, pigscript_name, pigscript_alias, git_ref, :parameters => parameters)
       response.body['illustrate_id'].should == illustrate_id
     end
     
