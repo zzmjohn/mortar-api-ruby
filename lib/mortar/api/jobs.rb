@@ -4,6 +4,8 @@ module Mortar
   class API
     module Jobs
 
+      STATUS_STARTING          = "starting"
+      STATUS_GATEWAY_STARTING  = "GATEWAY_STARTING" #Comes from task.
       STATUS_VALIDATING_SCRIPT = "validating_script"
       STATUS_SCRIPT_ERROR      = "script_error"
       STATUS_PLAN_ERROR        = "plan_error"
@@ -15,7 +17,9 @@ module Mortar
       STATUS_STOPPING          = "stopping"
       STATUS_STOPPED           = "stopped"
 
-      STATUSES_IN_PROGRESS    = Set.new([STATUS_VALIDATING_SCRIPT, 
+      STATUSES_IN_PROGRESS    = Set.new([STATUS_STARTING,
+                                         STATUS_GATEWAY_STARTING,
+                                         STATUS_VALIDATING_SCRIPT, 
                                          STATUS_STARTING_CLUSTER, 
                                          STATUS_RUNNING, 
                                          STATUS_STOPPING])
