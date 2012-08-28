@@ -16,6 +16,8 @@ require "mortar/api/errors"
 require "mortar/api/version"
 
 require "mortar/api/illustrate"
+require "mortar/api/describe"
+require "mortar/api/validate"
 require "mortar/api/jobs"
 require "mortar/api/login"
 require "mortar/api/projects"
