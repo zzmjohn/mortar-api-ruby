@@ -66,11 +66,12 @@ module Mortar
     end
     
     # GET /vX/jobs
-    def get_jobs
+    def get_jobs(skip, limit)
       request(
         :expects  => 200,
         :method   => :get,
-        :path     => versioned_path("/jobs")
+        :path     => versioned_path("/jobs"),
+        :query    => { :skip => skip, :limit => limit }
       )
     end
     

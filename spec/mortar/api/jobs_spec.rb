@@ -86,7 +86,7 @@ describe Mortar::API do
       Excon.stub({:method => :get, :path => "/v2/jobs"}) do |params|
         {:body => Mortar::API::OkJson.encode({"jobs" => [{'job_id' => '1', 'status' => 'running'}, {'job_id' => '2', 'status' => 'running'}]}), :status => 200}
       end
-      response = @api.get_jobs()
+      response = @api.get_jobs(0, 10)
       jobs = response.body["jobs"]
       jobs.nil?.should be_false
       jobs.length.should == 2
