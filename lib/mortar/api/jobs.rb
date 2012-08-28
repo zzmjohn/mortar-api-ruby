@@ -50,7 +50,7 @@ module Mortar
     
     # POST /vX/jobs
     def post_job_new_cluster(project_name, pigscript, git_ref, cluster_size, options={})
-      keep_alive = options[:keepalive].nil? ? false : options[:keepalive]
+      keep_alive = options[:keepalive].nil? ? true : options[:keepalive]
       parameters = options[:parameters] || {}
       request(
         :expects  => 200,
