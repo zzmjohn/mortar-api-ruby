@@ -15,6 +15,7 @@ require "mortar/api/basicauth"
 require "mortar/api/errors"
 require "mortar/api/version"
 
+require "mortar/api/clusters"
 require "mortar/api/illustrate"
 require "mortar/api/describe"
 require "mortar/api/validate"
