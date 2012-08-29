@@ -15,7 +15,7 @@ module Mortar
       request(
         :expects  => 200,
         :method   => :get,
-        :path     => versioned_path("/tasks/#{task_id}"),
+        :path     => versioned_path("/tasks/#{task_id}")
       )
     end
     
