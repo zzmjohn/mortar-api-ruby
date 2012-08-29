@@ -29,5 +29,20 @@ describe Mortar::API do
       end
       expect {@api.get_user()}.to raise_error(Mortar::API::Errors::Unauthorized)
     end
+
+    it "updates user successfully" do
+      user_id = "somebiglongid"
+      github_username = "some_github_name"
+      task_id = "some1task2id"
+
+      body = Mortar::API::OkJson.encode({"github_username" => github_username})
+      Excon.stub({:method => :put, :path => "/v2/user/#{user_id}", :body => body}) do |params|
+        {:body => Mortar::API::OkJson.encode({"task_id" => task_id}), :status => 200}
+      end
+
+      response = @api.update_user(user_id, {"github_username" => github_username})
+      response.body['task_id'].should == task_id
+    end
+
   end
 end

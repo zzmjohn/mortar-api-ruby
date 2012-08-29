@@ -10,5 +10,16 @@ module Mortar
       )
     end
 
+    # PUT /v2/user/:user
+    def update_user(user_id, options={})
+      body = json_encode(options)
+      request(
+        :expects  => 200,
+        :method   => :put,
+        :path     => versioned_path("/user/#{user_id}"),
+        :body     => body
+      )
+    end
+
   end
 end
