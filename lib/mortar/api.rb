@@ -23,6 +23,7 @@ require "mortar/api/jobs"
 require "mortar/api/login"
 require "mortar/api/projects"
 require "mortar/api/user"
+require "mortar/api/tasks"
 
 srand
 
