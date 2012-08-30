@@ -1,0 +1,7 @@
+Mortar Ruby API Client
+Copyright 2012 Mortar Data Inc.
+
+This product includes software developed at Mortar Data Inc. (http://mortardata.com/)
+
+Portions of this code from heroku.rb (https://github.com/heroku/heroku.rb/),
+used under an MIT license (https://github.com/heroku/heroku.rb/blob/56fa8ed4cba0ab7e5785d6df75a9de687237124f/README.md#meta).
