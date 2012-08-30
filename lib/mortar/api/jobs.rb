@@ -83,5 +83,14 @@ module Mortar
         :path     => versioned_path("/jobs/#{job_id}")
       )
     end
+
+    # DELETE /v2/jobs/:job_id
+    def stop_job(job_id)
+      request(
+        :expects => 200,
+        :method  => :delete,
+        :path    => versioned_path("/jobs/#{job_id}")
+      )
+    end
   end
 end
