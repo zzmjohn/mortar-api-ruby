@@ -80,11 +80,13 @@ module Mortar
         response = @connection.request(params, &block)
       rescue Excon::Errors::HTTPStatusError => error
         klass = case error.response.status
+          when 400 then Mortar::API::Errors::BadRequest
           when 401 then Mortar::API::Errors::Unauthorized
           when 402 then Mortar::API::Errors::VerificationRequired
           when 403 then Mortar::API::Errors::Forbidden
           when 404 then Mortar::API::Errors::NotFound
           when 408 then Mortar::API::Errors::Timeout
+          when 409 then Mortar::API::Errors::Conflict
           when 422 then Mortar::API::Errors::RequestFailed
           when 423 then Mortar::API::Errors::Locked
           when /50./ then Mortar::API::Errors::RequestFailed
