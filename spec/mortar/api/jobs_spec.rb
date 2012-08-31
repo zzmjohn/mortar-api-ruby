@@ -108,5 +108,13 @@ describe Mortar::API do
       jobs.length.should == 2
     end
 
+    it "stops a running job" do
+      job_id = "1234abc342221abc"
+      Excon.stub({:method => :delete, :path => "/v2/jobs/#{job_id}"}) do |params|
+        {:body => Mortar::API::OkJson.encode({"success" => true}), :status => 200}
+      end
+      response = @api.stop_job(job_id)
+      response.body["success"].should be_true
+    end
   end
 end
