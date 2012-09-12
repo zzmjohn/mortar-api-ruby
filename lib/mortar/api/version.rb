@@ -18,7 +18,7 @@ module Mortar
   class API
     # client version
     # see http://semver.org/
-    VERSION = "0.2.0"
+    VERSION = "0.3.0"
     
     SERVER_API_VERSION = "2"
   end
