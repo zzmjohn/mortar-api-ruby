@@ -57,24 +57,6 @@ describe Mortar::API do
       response.body['sample_s3_urls'].count.should == 2
     end
     
-    it "posts a sample fixture" do
-      fixture_name = "some_fixture"
-      s3_url = "some_s3_url"
-      sample_percent = 0.0001
-      project_name = "ProjectName"
-      fixture_id = "12345123412abcd12345123412abcdef"
-
-      body = Mortar::API::OkJson.encode({"fixture_name" => fixture_name,
-                                         "project_name" => project_name,
-                                         "s3_url" => s3_url,
-                                         "sample_percent" => sample_percent})
-      Excon.stub({:method => :post, :path => "/v2/fixtures", :body => body}) do |params|
-        {:body => Mortar::API::OkJson.encode({"fixture_id" => fixture_id}), :status => 200}
-      end
-      response = @api.post_fixture_sample(project_name, fixture_name, s3_url, sample_percent)
-      response.body['fixture_id'].should == fixture_id
-    end
-    
     it "posts a limit fixture" do
       fixture_name = "some_fixture"
       s3_url = "some_s3_url"

@@ -38,19 +38,6 @@ module Mortar
         :path     => versioned_path("/fixtures/#{fixture_id}")
       )
     end
-    
-    # POST /vX/fixtures
-    def post_fixture_sample(project_name, fixture_name, input_url, sample_percent)
-      request(
-        :expects  => 200,
-        :method   => :post,
-        :path     => versioned_path("/fixtures"),
-        :body     => json_encode({"fixture_name" => fixture_name,
-                                  "project_name" => project_name,
-                                  "s3_url" => input_url,
-                                  "sample_percent" => sample_percent})
-      )
-    end
 
     # POST /vX/fixtures 
     def post_fixture_limit(project_name, fixture_name, input_url, num_rows)
