@@ -55,7 +55,7 @@ module Mortar
     end
     
     # POST /vX/illustrates
-    def post_illustrate(project_name, pigscript, pigscript_alias, git_ref, options = {})
+    def post_illustrate(project_name, pigscript, pigscript_alias, skip_pruning, git_ref, options = {})
       parameters = options[:parameters] || {}
       request(
         :expects  => 200,
@@ -64,6 +64,7 @@ module Mortar
         :body     => json_encode({"project_name" => project_name,
                                   "pigscript_name" => pigscript,
                                   "alias" => pigscript_alias,
+                                  "skip_pruning" => skip_pruning,
                                   "git_ref" => git_ref,
                                   "parameters" => parameters
                                   })
