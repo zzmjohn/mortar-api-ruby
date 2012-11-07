@@ -109,6 +109,12 @@ module Mortar
         end
       end
 
+      #Check if we got a redirect and treat it as an error.
+      if response.body.include? "redirect"
+        redirect_error = Mortar::API::Errors::Redirect.new(response.body["error"], response.body)
+        raise(redirect_error)
+      end
+
       # reset (non-persistent) connection
       @connection.reset
 
