@@ -32,6 +32,7 @@ module Mortar
         end
       end
 
+      class Redirect < ErrorWithResponse; end
       class BadRequest < ErrorWithResponse; end
       class Unauthorized < ErrorWithResponse; end
       class VerificationRequired < ErrorWithResponse; end
