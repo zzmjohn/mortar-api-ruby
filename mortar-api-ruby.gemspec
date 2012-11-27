@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.require_paths = ["lib"]
 
-  gem.add_runtime_dependency 'excon', '~>0.16.10'
+  gem.add_runtime_dependency 'excon', '~>0.15'
 
   gem.add_development_dependency 'gem-release'  
   gem.add_development_dependency 'rake'
