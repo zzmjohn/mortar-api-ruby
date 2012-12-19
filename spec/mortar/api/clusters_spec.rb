@@ -39,6 +39,15 @@ describe Mortar::API do
       clusters.nil?.should be_false
       clusters.length.should == 2
     end
+    
+    it "stops a running cluster" do
+      cluster_id = "1234abc342221abc"
+      Excon.stub({:method => :delete, :path => "/v2/clusters/#{cluster_id}"}) do |params|
+        {:body => Mortar::API::OkJson.encode({"success" => true}), :status => 200}
+      end
+      response = @api.stop_cluster(cluster_id)
+      response.body["success"].should be_true
+    end
 
   end
 end
