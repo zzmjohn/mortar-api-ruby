@@ -24,6 +24,15 @@ module Mortar
         :method   => :get,
         :path     => versioned_path("/clusters")
       )
-    end    
+    end 
+    
+      # DELETE /v2/clusters/:cluster_id
+      def stop_cluster(cluster_id)
+        request(
+          :expects => 200,
+          :method  => :delete,
+          :path    => versioned_path("/clusters/#{cluster_id}")
+        )
+      end   
   end
 end
