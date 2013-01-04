@@ -52,6 +52,7 @@ module Mortar
     # POST /vX/jobs
     def post_job_existing_cluster(project_name, pigscript, git_ref, cluster_id, options={})
       parameters = options[:parameters] || {}
+      notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
       request(
         :expects  => 200,
         :method   => :post,
@@ -60,13 +61,15 @@ module Mortar
                                   "pigscript_name" => pigscript,
                                   "git_ref" => git_ref,
                                   "cluster_id" => cluster_id,
-                                  "parameters" => parameters
+                                  "parameters" => parameters,
+                                  "notify_on_job_finish" => notify_on_job_finish
                                   }))
     end
     
     # POST /vX/jobs
     def post_job_new_cluster(project_name, pigscript, git_ref, cluster_size, options={})
       keep_alive = options[:keepalive].nil? ? true : options[:keepalive]
+      notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
       parameters = options[:parameters] || {}
       request(
         :expects  => 200,
@@ -77,7 +80,8 @@ module Mortar
                                   "git_ref" => git_ref,
                                   "cluster_size" => cluster_size,
                                   "keep_alive" => keep_alive,
-                                  "parameters" => parameters
+                                  "parameters" => parameters,
+                                  "notify_on_job_finish" => notify_on_job_finish
                                   }))
     end
     
