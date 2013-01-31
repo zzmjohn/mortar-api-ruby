@@ -23,7 +23,11 @@ module Mortar
       STATUS_CREATING   = "CREATING"
       STATUS_ACTIVE     = "ACTIVE"
       STATUS_FAILED     = "FAILED"
+      STATUS_DELETING   = "DELETING"
+      STATUS_DELETED    = "DELETED"
       
+      STATUSES_DELETE_COMPLETE = Set.new([STATUS_DELETED,
+                                          STATUS_ACTIVE])
       STATUSES_COMPLETE = Set.new([STATUS_ACTIVE, 
                                    STATUS_FAILED])
     end
@@ -54,6 +58,15 @@ module Mortar
         :path     => versioned_path("/projects"),
         :body     => json_encode({"project_name" => project_name})
       )
-    end 
+    end
+    
+    # DELETE /vX/projects/:project
+    def delete_project(project_name)
+      request(
+        :expects => 200,
+        :method => :delete,
+        :path => versioned_path("/projects/#{project_name}")
+      )
+    end
   end
 end
