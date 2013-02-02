@@ -23,11 +23,8 @@ module Mortar
       STATUS_CREATING   = "CREATING"
       STATUS_ACTIVE     = "ACTIVE"
       STATUS_FAILED     = "FAILED"
-      STATUS_DELETING   = "DELETING"
       STATUS_DELETED    = "DELETED"
       
-      STATUSES_DELETE_COMPLETE = Set.new([STATUS_DELETED,
-                                          STATUS_ACTIVE])
       STATUSES_COMPLETE = Set.new([STATUS_ACTIVE, 
                                    STATUS_FAILED])
     end
