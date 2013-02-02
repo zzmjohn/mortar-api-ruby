@@ -17,6 +17,16 @@
 module Mortar
   class API
     
+    module Clusters
+      STATUS_PENDING    = "pending"
+      STATUS_STARTING   = "starting"
+      STATUS_STARTING_REQUESTED_STOP = "starting_requested_stop"
+      STATUS_RUNNING    = "running"
+      STATUS_STOPPING   = "stopping"
+      STATUS_DESTROYED  = "destroyed"
+      STATUS_FAILED     = "failed"
+    end
+    
     # GET /vX/clusters
     def get_clusters()
       request(
