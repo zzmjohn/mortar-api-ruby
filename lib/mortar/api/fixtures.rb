@@ -19,6 +19,8 @@ require 'set'
 module Mortar
   class API
     module Fixtures
+
+=begin
       STATUS_GATEWAY_STARTING = 'GATEWAY_STARTING'
       STATUS_PENDING = 'PENDING'
       STATUS_CREATING = 'CREATING'
@@ -28,8 +30,32 @@ module Mortar
       
       STATUSES_COMPLETE = Set.new([STATUS_CREATED, 
                                    STATUS_FAILED])
+=end
     end
-    
+ 
+    # POST /vX/fixtures
+    def post_fixture_generate(project_name, pigscript_name, git_ref, 
+                              fixture_name, fixture_type, fixture_alias, fixture_argument,
+                              options={})
+      
+      parameters = options[:parameters] || {}
+      request(
+        :expects  => 200,
+        :method   => :post,
+        :path     => versioned_path("/fixtures"), 
+        :body     => json_encode({"project_name" => project_name, 
+                                  "pigscript_name" => pigscript_name, 
+                                  "git_ref" => git_ref, 
+                                  "parameters" => parameters, 
+                                  "fixture_name" => fixture_name,
+                                  "fixture_type" => fixture_type,
+                                  "fixture_alias" => fixture_alias,
+                                  "fixture_argument" => fixture_argument
+                                 })
+      )
+    end
+
+=begin   
     # GET /vX/fixtures/:fixture
     def get_fixture(fixture_id)
       request(
@@ -51,5 +77,6 @@ module Mortar
                                   "num_rows"     => num_rows})
       )
     end
+=end
   end
 end
