@@ -38,11 +38,11 @@ describe Mortar::API do
       cluster_id = "f82c774f7ccd429e91db996838cb6c4a"
       parameters = {"my_first_param" => 1, "MY_SECOND_PARAM" => "TWO"}
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
-                                         "pigscript_name" => pigscript_name,
                                          "git_ref" => git_ref,
                                          "cluster_id" => cluster_id,
                                          "parameters" => parameters,
-                                         "notify_on_job_finish" => true
+                                         "notify_on_job_finish" => true,
+                                         "pigscript_name" => pigscript_name
 })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
@@ -58,12 +58,12 @@ describe Mortar::API do
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
       cluster_size = 5
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
-                                         "pigscript_name" => pigscript_name,
                                          "git_ref" => git_ref,
                                          "cluster_size" => cluster_size,
                                          "keep_alive" => true,
                                          "parameters" => {},
-                                         "notify_on_job_finish" => true
+                                         "notify_on_job_finish" => true,
+                                         "pigscript_name" => pigscript_name
 })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
@@ -79,12 +79,12 @@ describe Mortar::API do
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
       cluster_size = 5
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
-                                         "pigscript_name" => pigscript_name,
                                          "git_ref" => git_ref,
                                          "cluster_size" => cluster_size,
                                          "keep_alive" => true,
                                          "parameters" => {},
-                                         "notify_on_job_finish" => true
+                                         "notify_on_job_finish" => true,
+                                         "pigscript_name" => pigscript_name
 })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
@@ -100,12 +100,12 @@ describe Mortar::API do
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
       cluster_size = 5
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
-                                         "pigscript_name" => pigscript_name,
                                          "git_ref" => git_ref,
                                          "cluster_size" => cluster_size,
                                          "keep_alive" => false,
                                          "parameters" => {},
-                                         "notify_on_job_finish" => false
+                                         "notify_on_job_finish" => false,
+                                         "pigscript_name" => pigscript_name
 })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
@@ -121,12 +121,12 @@ describe Mortar::API do
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
       cluster_size = 5
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
-                                         "pigscript_name" => pigscript_name,
                                          "git_ref" => git_ref,
                                          "cluster_size" => cluster_size,
                                          "keep_alive" => false,
                                          "parameters" => {},
-                                         "notify_on_job_finish" => true
+                                         "notify_on_job_finish" => true,
+                                         "pigscript_name" => pigscript_name
 })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
