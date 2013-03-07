@@ -50,76 +50,59 @@ module Mortar
     
     
     # POST /vX/jobs
-    def post_pigscript_job_existing_cluster(project_name, pigscript, git_ref, cluster_id, options={})
+    def post_job_existing_cluster(project_name, pigscript, git_ref, cluster_id, options={})
       parameters = options[:parameters] || {}
       notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
-      request(
-        :expects  => 200,
-        :method   => :post,
-        :path     => versioned_path("/jobs"),
-        :body     => json_encode({"project_name" => project_name,
-                                  "pigscript_name" => pigscript,
-                                  "git_ref" => git_ref,
-                                  "cluster_id" => cluster_id,
-                                  "parameters" => parameters,
-                                  "notify_on_job_finish" => notify_on_job_finish
-                                  }))
-    end
+      is_control_script = options[:is_control_script] || false
+      
+      body = {"project_name" => project_name,
+        "git_ref" => git_ref,
+        "cluster_id" => cluster_id,
+        "parameters" => parameters,
+        "notify_on_job_finish" => notify_on_job_finish
+      }
+      
+      if is_control_script
+        body["controlscript_name"] = pigscript
+      else
+        body["pigscript_name"] = pigscript
+      end
 
-    def post_controlscript_job_existing_cluster(project_name, controlscript, git_ref, cluster_id, options={})
-      parameters = options[:parameters] || {}
-      notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
       request(
         :expects  => 200,
         :method   => :post,
         :path     => versioned_path("/jobs"),
-        :body     => json_encode({"project_name" => project_name,
-                                  "controlscript_name" => controlscript,
-                                  "git_ref" => git_ref,
-                                  "cluster_id" => cluster_id,
-                                  "parameters" => parameters,
-                                  "notify_on_job_finish" => notify_on_job_finish
-                                  }))
+        :body     => json_encode(body))
     end
 
     
     # POST /vX/jobs
-    def post_pigscript_job_new_cluster(project_name, pigscript, git_ref, cluster_size, options={})
+    def post_job_new_cluster(project_name, pigscript, git_ref, cluster_size, options={})
       keep_alive = options[:keepalive].nil? ? true : options[:keepalive]
       notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
       parameters = options[:parameters] || {}
+      is_control_script = options[:is_control_script] || false
+      
+      body = { "project_name" => project_name,
+        "git_ref" => git_ref,
+        "cluster_size" => cluster_size,
+        "keep_alive" => keep_alive,
+        "parameters" => parameters,
+        "notify_on_job_finish" => notify_on_job_finish
+      }
+      if is_control_script
+        body["controlscript_name"] = pigscript
+      else
+        body["pigscript_name"] = pigscript
+      end
+
       request(
         :expects  => 200,
         :method   => :post,
         :path     => versioned_path("/jobs"),
-        :body     => json_encode({"project_name" => project_name,
-                                  "pigscript_name" => pigscript,
-                                  "git_ref" => git_ref,
-                                  "cluster_size" => cluster_size,
-                                  "keep_alive" => keep_alive,
-                                  "parameters" => parameters,
-                                  "notify_on_job_finish" => notify_on_job_finish
-                                  }))
+        :body     => json_encode(body))
     end
 
-    def post_controlscript_job_new_cluster(project_name, controlscript, git_ref, cluster_size, options={})
-      keep_alive = options[:keepalive].nil? ? true : options[:keepalive]
-      notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
-      parameters = options[:parameters] || {}
-      request(
-        :expects  => 200,
-        :method   => :post,
-        :path     => versioned_path("/jobs"),
-        :body     => json_encode({"project_name" => project_name,
-                                  "controlscript_name" => controlscript,
-                                  "git_ref" => git_ref,
-                                  "cluster_size" => cluster_size,
-                                  "keep_alive" => keep_alive,
-                                  "parameters" => parameters,
-                                  "notify_on_job_finish" => notify_on_job_finish
-                                  }))
-    end
-    
     # GET /vX/jobs
     def get_jobs(skip, limit)
       request(
