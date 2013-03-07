@@ -50,7 +50,7 @@ module Mortar
     
     
     # POST /vX/jobs
-    def post_job_existing_cluster(project_name, pigscript, git_ref, cluster_id, options={})
+    def post_job_existing_cluster(project_name, script_name, git_ref, cluster_id, options={})
       parameters = options[:parameters] || {}
       notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
       is_control_script = options[:is_control_script] || false
@@ -63,9 +63,9 @@ module Mortar
       }
       
       if is_control_script
-        body["controlscript_name"] = pigscript
+        body["controlscript_name"] = script_name
       else
-        body["pigscript_name"] = pigscript
+        body["pigscript_name"] = script_name
       end
 
       request(
@@ -77,7 +77,7 @@ module Mortar
 
     
     # POST /vX/jobs
-    def post_job_new_cluster(project_name, pigscript, git_ref, cluster_size, options={})
+    def post_job_new_cluster(project_name, script_name, git_ref, cluster_size, options={})
       keep_alive = options[:keepalive].nil? ? true : options[:keepalive]
       notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
       parameters = options[:parameters] || {}
@@ -91,9 +91,9 @@ module Mortar
         "notify_on_job_finish" => notify_on_job_finish
       }
       if is_control_script
-        body["controlscript_name"] = pigscript
+        body["controlscript_name"] = script_name
       else
-        body["pigscript_name"] = pigscript
+        body["pigscript_name"] = script_name
       end
 
       request(
