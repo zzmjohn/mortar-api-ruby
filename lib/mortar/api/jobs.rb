@@ -46,6 +46,10 @@ module Mortar
                                         STATUS_EXECUTION_ERROR,
                                         STATUS_SERVICE_ERROR,
                                         STATUS_STOPPED])
+
+      CLUSTER_TYPE__SINGLE_JOB = 'single_job'
+      CLUSTER_TYPE__PERSISTENT = 'persistent'
+      CLUSTER_TYPE__PERMANENT = 'permanent'
     end
     
     
@@ -78,15 +82,15 @@ module Mortar
     
     # POST /vX/jobs
     def post_job_new_cluster(project_name, script_name, git_ref, cluster_size, options={})
-      keep_alive = options[:keepalive].nil? ? true : options[:keepalive]
+      cluster_type = options[:cluster_type].nil? ? Jobs::CLUSTER_TYPE__PERSISTENT : options[:cluster_type]
       notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
       parameters = options[:parameters] || {}
       is_control_script = options[:is_control_script] || false
-      
+
       body = { "project_name" => project_name,
         "git_ref" => git_ref,
         "cluster_size" => cluster_size,
-        "keep_alive" => keep_alive,
+        "cluster_type" => cluster_type,
         "parameters" => parameters,
         "notify_on_job_finish" => notify_on_job_finish
       }

@@ -28,7 +28,7 @@ describe Mortar::API do
   after(:each) do
     Excon.stubs.clear
   end
-  
+
   context "jobs" do
     it "posts a job for an existing cluster" do
       job_id = "7b93e4d3ab034188a0c2be418d3d24ed"
@@ -51,16 +51,17 @@ describe Mortar::API do
       response.body['job_id'].should == job_id
     end
 
-    it "posts a job for a new cluster, defaulting to keep_alive of true" do
+    it "posts a job for a new cluster, defaulting cluster_type to persistent" do
       job_id = "7b93e4d3ab034188a0c2be418d3d24ed"
       project_name = "my_project"
       pigscript_name = "my_pigscript"
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
       cluster_size = 5
+      cluster_type = Mortar::API::Jobs::CLUSTER_TYPE__PERSISTENT
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
                                          "git_ref" => git_ref,
                                          "cluster_size" => cluster_size,
-                                         "keep_alive" => true,
+                                         "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => true,
                                          "pigscript_name" => pigscript_name
@@ -78,10 +79,11 @@ describe Mortar::API do
       pigscript_name = "my_pigscript"
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
       cluster_size = 5
+      cluster_type = Mortar::API::Jobs::CLUSTER_TYPE__PERSISTENT
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
                                          "git_ref" => git_ref,
                                          "cluster_size" => cluster_size,
-                                         "keep_alive" => true,
+                                         "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => true,
                                          "pigscript_name" => pigscript_name
@@ -99,10 +101,11 @@ describe Mortar::API do
       pigscript_name = "my_pigscript"
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
       cluster_size = 5
+      cluster_type = Mortar::API::Jobs::CLUSTER_TYPE__SINGLE_JOB
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
                                          "git_ref" => git_ref,
                                          "cluster_size" => cluster_size,
-                                         "keep_alive" => false,
+                                         "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => false,
                                          "pigscript_name" => pigscript_name
@@ -110,31 +113,54 @@ describe Mortar::API do
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
       end
-      response = @api.post_job_new_cluster(project_name, pigscript_name, git_ref, cluster_size, :keepalive => false, :notify_on_job_finish => false)
+      response = @api.post_job_new_cluster(project_name, pigscript_name, git_ref, cluster_size, :cluster_type => cluster_type, :notify_on_job_finish => false)
       response.body['job_id'].should == job_id
     end
     
-    it "accepts keep_alive of false" do
+    it "accepts cluster_type of single_job" do
       job_id = "7b93e4d3ab034188a0c2be418d3d24ed"
       project_name = "my_project"
       pigscript_name = "my_pigscript"
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
       cluster_size = 5
+      cluster_type = Mortar::API::Jobs::CLUSTER_TYPE__SINGLE_JOB
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
                                          "git_ref" => git_ref,
                                          "cluster_size" => cluster_size,
-                                         "keep_alive" => false,
+                                         "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => true,
                                          "pigscript_name" => pigscript_name
-})
+                                        })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
       end
-      response = @api.post_job_new_cluster(project_name, pigscript_name, git_ref, cluster_size, :keepalive => false)
+      response = @api.post_job_new_cluster(project_name, pigscript_name, git_ref, cluster_size, :cluster_type => cluster_type)
       response.body['job_id'].should == job_id
     end
-    
+
+    it "accepts cluster_type of permanent" do
+      job_id = "7b93e4d3ab034188a0c2be418d3d24ed"
+      project_name = "my_project"
+      pigscript_name = "my_pigscript"
+      git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
+      cluster_size = 5
+      cluster_type = Mortar::API::Jobs::CLUSTER_TYPE__PERMANENT
+      body = Mortar::API::OkJson.encode({"project_name" => project_name,
+                                         "git_ref" => git_ref,
+                                         "cluster_size" => cluster_size,
+                                         "cluster_type" => cluster_type,
+                                         "parameters" => {},
+                                         "notify_on_job_finish" => true,
+                                         "pigscript_name" => pigscript_name
+                                        })
+      Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
+        {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
+      end
+      response = @api.post_job_new_cluster(project_name, pigscript_name, git_ref, cluster_size, :cluster_type => cluster_type)
+      response.body['job_id'].should == job_id
+    end
+
     it "gets a job" do
       job_id = "7b93e4d3ab034188a0c2be418d3d24ed"
       status = Mortar::API::Jobs::STATUS_RUNNING
