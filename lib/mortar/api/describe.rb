@@ -49,7 +49,7 @@ module Mortar
     end
     
     # POST /vX/describes
-    def post_describe(project_name, pigscript, pigscript_alias, git_ref, options = {})
+    def post_describe(project_name, pigscript, pigscript_alias, git_ref, pig_version, options = {})
       parameters = options[:parameters] || {}
       request(
         :expects  => 200,
@@ -59,7 +59,8 @@ module Mortar
                                   "pigscript_name" => pigscript,
                                   "alias" => pigscript_alias,
                                   "git_ref" => git_ref,
-                                  "parameters" => parameters
+                                  "parameters" => parameters,
+                                  "pig_version" => pig_version
                                   })
       )
     end

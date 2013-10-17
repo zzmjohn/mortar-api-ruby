@@ -49,7 +49,7 @@ module Mortar
     end
     
     # POST /vX/validates
-    def post_validate(project_name, pigscript, git_ref, options = {})
+    def post_validate(project_name, pigscript, git_ref, pig_version, options = {})
       parameters = options[:parameters] || {}
       request(
         :expects  => 200,
@@ -58,7 +58,8 @@ module Mortar
         :body     => json_encode({"project_name" => project_name,
                                   "pigscript_name" => pigscript,
                                   "git_ref" => git_ref,
-                                  "parameters" => parameters
+                                  "parameters" => parameters,
+                                  "pig_version" => pig_version
                                   })
       )
     end

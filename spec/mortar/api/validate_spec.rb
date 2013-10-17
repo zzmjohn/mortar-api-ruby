@@ -38,12 +38,13 @@ describe Mortar::API do
       parameters = {"key" => "value"}
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
                                          "pigscript_name" => pigscript_name,
-                                         "git_ref" => git_ref,
-                                         "parameters" => parameters})
+                                         "git_ref" => git_ref, 
+                                         "parameters" => parameters,
+                                         "pig_version" => "0.9"})
       Excon.stub({:method => :post, :path => "/v2/validates", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'validate_id' => validate_id}), :status => 200}
       end
-      response = @api.post_validate(project_name, pigscript_name, git_ref, :parameters => parameters)
+      response = @api.post_validate(project_name, pigscript_name, git_ref, "0.9", :parameters => parameters)
       response.body['validate_id'].should == validate_id
     end
     
