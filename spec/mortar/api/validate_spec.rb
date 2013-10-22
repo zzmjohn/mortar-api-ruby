@@ -38,12 +38,33 @@ describe Mortar::API do
       parameters = {"key" => "value"}
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
                                          "pigscript_name" => pigscript_name,
-                                         "git_ref" => git_ref,
-                                         "parameters" => parameters})
+                                         "git_ref" => git_ref, 
+                                         "parameters" => parameters
+                                         })
       Excon.stub({:method => :post, :path => "/v2/validates", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'validate_id' => validate_id}), :status => 200}
       end
       response = @api.post_validate(project_name, pigscript_name, git_ref, :parameters => parameters)
+      response.body['validate_id'].should == validate_id
+    end
+
+    it "posts a validate with set pig version" do
+      validate_id = "7b93e4d3ab034188a0c2be418d3d24ee"
+      project_name = "my_project"
+      pigscript_name = "my_pigscript"
+      git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
+      parameters = {"key" => "value"}
+      pig_version = "0.12"
+      body = Mortar::API::OkJson.encode({"project_name" => project_name,
+                                         "pigscript_name" => pigscript_name,
+                                         "git_ref" => git_ref, 
+                                         "parameters" => parameters,
+                                         "pig_version" => pig_version
+                                         })
+      Excon.stub({:method => :post, :path => "/v2/validates", :body => body}) do |params|
+        {:body => Mortar::API::OkJson.encode({'validate_id' => validate_id}), :status => 200}
+      end
+      response = @api.post_validate(project_name, pigscript_name, git_ref, :parameters => parameters, :pig_version => pig_version)
       response.body['validate_id'].should == validate_id
     end
     

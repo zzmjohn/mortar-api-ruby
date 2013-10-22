@@ -51,15 +51,22 @@ module Mortar
     # POST /vX/validates
     def post_validate(project_name, pigscript, git_ref, options = {})
       parameters = options[:parameters] || {}
+      body = {"project_name" => project_name,
+              "pigscript_name" => pigscript,
+              "git_ref" => git_ref,
+              "parameters" => parameters
+             }
+
+      #If no pig_version is set, leave it to server to figure out version.
+      unless options[:pig_version].nil?
+        body["pig_version"] = options[:pig_version]
+      end
+
       request(
         :expects  => 200,
         :method   => :post,
         :path     => versioned_path("/validates"),
-        :body     => json_encode({"project_name" => project_name,
-                                  "pigscript_name" => pigscript,
-                                  "git_ref" => git_ref,
-                                  "parameters" => parameters
-                                  })
+        :body     => json_encode(body)
       )
     end
   end

@@ -43,7 +43,8 @@ describe Mortar::API do
                                          "alias" => pigscript_alias,
                                          "skip_pruning" => skip_pruning,
                                          "git_ref" => git_ref,
-                                         "parameters" => parameters})
+                                         "parameters" => parameters
+                                         })
       Excon.stub({:method => :post, :path => "/v2/illustrates", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'illustrate_id' => illustrate_id}), :status => 200}
       end

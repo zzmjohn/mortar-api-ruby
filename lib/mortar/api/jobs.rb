@@ -72,6 +72,11 @@ module Mortar
         body["pigscript_name"] = script_name
       end
 
+      #If no pig_version is set, leave it to server to figure out version.
+      unless options[:pig_version].nil?
+        body["pig_version"] = options[:pig_version]
+      end
+
       request(
         :expects  => 200,
         :method   => :post,
@@ -98,6 +103,11 @@ module Mortar
         body["controlscript_name"] = script_name
       else
         body["pigscript_name"] = script_name
+      end
+
+      #If no pig_version is set, leave it to server to figure out version.
+      unless options[:pig_version].nil?
+        body["pig_version"] = options[:pig_version]
       end
 
       request(

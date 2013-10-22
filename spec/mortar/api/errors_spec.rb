@@ -42,7 +42,8 @@ describe Mortar::API do
                                          "alias" => pigscript_alias,
                                          "skip_pruning" => skip_pruning,
                                          "git_ref" => git_ref,
-                                         "parameters" => parameters})
+                                         "parameters" => parameters
+                                         })
       redirect_url = "some_redirect_url"
       redirect_message = "some_redirect_message"
       Excon.stub({:method => :post, :path => "/v2/illustrates", :body => body}) do |params|

@@ -57,17 +57,24 @@ module Mortar
     # POST /vX/illustrates
     def post_illustrate(project_name, pigscript, pigscript_alias, skip_pruning, git_ref, options = {})
       parameters = options[:parameters] || {}
+      body = {"project_name" => project_name,
+              "pigscript_name" => pigscript,
+              "alias" => pigscript_alias,
+              "skip_pruning" => skip_pruning,
+              "git_ref" => git_ref,
+              "parameters" => parameters
+              }
+
+      #If no pig_version is set, leave it to server to figure out version.
+      unless options[:pig_version].nil?
+        body["pig_version"] = options[:pig_version]
+      end
+
       request(
         :expects  => 200,
         :method   => :post,
         :path     => versioned_path("/illustrates"),
-        :body     => json_encode({"project_name" => project_name,
-                                  "pigscript_name" => pigscript,
-                                  "alias" => pigscript_alias,
-                                  "skip_pruning" => skip_pruning,
-                                  "git_ref" => git_ref,
-                                  "parameters" => parameters
-                                  })
+        :body     => json_encode(body)
       )
     end    
   end

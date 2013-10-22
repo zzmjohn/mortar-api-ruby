@@ -108,7 +108,7 @@ describe Mortar::API do
                                          "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => false,
-                                         "pigscript_name" => pigscript_name
+                                         "pigscript_name" => pigscript_name,
 })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
@@ -152,7 +152,7 @@ describe Mortar::API do
                                          "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => true,
-                                         "pigscript_name" => pigscript_name
+                                         "pigscript_name" => pigscript_name,
                                         })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
