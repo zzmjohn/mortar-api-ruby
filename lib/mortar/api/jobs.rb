@@ -54,7 +54,7 @@ module Mortar
     
     
     # POST /vX/jobs
-    def post_job_existing_cluster(project_name, script_name, git_ref, pig_version, cluster_id, options={})
+    def post_job_existing_cluster(project_name, script_name, git_ref, cluster_id, options={})
       parameters = options[:parameters] || {}
       notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
       is_control_script = options[:is_control_script] || false
@@ -63,14 +63,18 @@ module Mortar
         "git_ref" => git_ref,
         "cluster_id" => cluster_id,
         "parameters" => parameters,
-        "notify_on_job_finish" => notify_on_job_finish,
-        "pig_version" => pig_version
+        "notify_on_job_finish" => notify_on_job_finish
       }
       
       if is_control_script
         body["controlscript_name"] = script_name
       else
         body["pigscript_name"] = script_name
+      end
+
+      #If no pig_version is set, leave it to server to figure out version.
+      unless options[:pig_version].nil?
+        body["pig_version"] = options[:pig_version]
       end
 
       request(
@@ -82,7 +86,7 @@ module Mortar
 
     
     # POST /vX/jobs
-    def post_job_new_cluster(project_name, script_name, git_ref, pig_version, cluster_size, options={})
+    def post_job_new_cluster(project_name, script_name, git_ref, cluster_size, options={})
       cluster_type = options[:cluster_type].nil? ? Jobs::CLUSTER_TYPE__PERSISTENT : options[:cluster_type]
       notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
       parameters = options[:parameters] || {}
@@ -93,13 +97,17 @@ module Mortar
         "cluster_size" => cluster_size,
         "cluster_type" => cluster_type,
         "parameters" => parameters,
-        "notify_on_job_finish" => notify_on_job_finish,
-        "pig_version" => pig_version
+        "notify_on_job_finish" => notify_on_job_finish
       }
       if is_control_script
         body["controlscript_name"] = script_name
       else
         body["pigscript_name"] = script_name
+      end
+
+      #If no pig_version is set, leave it to server to figure out version.
+      unless options[:pig_version].nil?
+        body["pig_version"] = options[:pig_version]
       end
 
       request(

@@ -43,12 +43,12 @@ describe Mortar::API do
                                          "alias" => pigscript_alias,
                                          "skip_pruning" => skip_pruning,
                                          "git_ref" => git_ref,
-                                         "parameters" => parameters,
-                                         "pig_version" => "0.9"})
+                                         "parameters" => parameters
+                                         })
       Excon.stub({:method => :post, :path => "/v2/illustrates", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'illustrate_id' => illustrate_id}), :status => 200}
       end
-      response = @api.post_illustrate(project_name, pigscript_name, pigscript_alias, skip_pruning, git_ref, "0.9", :parameters => parameters)
+      response = @api.post_illustrate(project_name, pigscript_name, pigscript_alias, skip_pruning, git_ref, :parameters => parameters)
       response.body['illustrate_id'].should == illustrate_id
     end
     

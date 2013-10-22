@@ -42,14 +42,14 @@ describe Mortar::API do
                                          "alias" => pigscript_alias,
                                          "skip_pruning" => skip_pruning,
                                          "git_ref" => git_ref,
-                                         "parameters" => parameters,
-                                         "pig_version" => "0.9"})
+                                         "parameters" => parameters
+                                         })
       redirect_url = "some_redirect_url"
       redirect_message = "some_redirect_message"
       Excon.stub({:method => :post, :path => "/v2/illustrates", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'redirect' => redirect_url, 'error' => redirect_message}), :status => 200}
       end
-       expect {@api.post_illustrate(project_name, pigscript_name, pigscript_alias, skip_pruning, git_ref, "0.9", :parameters => parameters)}.to raise_error(Mortar::API::Errors::Redirect)
+       expect {@api.post_illustrate(project_name, pigscript_name, pigscript_alias, skip_pruning, git_ref, :parameters => parameters)}.to raise_error(Mortar::API::Errors::Redirect)
     end
   end
 end
