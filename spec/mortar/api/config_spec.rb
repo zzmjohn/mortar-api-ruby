@@ -31,11 +31,10 @@ describe Mortar::API do
 
   context "config" do
     it "puts config vars" do
-      project_name = "my_project"
+      project_name = "my_project needs escaping"
       config_vars = {"a" => "foo", "B" => "BAR"}
-      body = Mortar::API::OkJson.encode({"project_name" => project_name,
-                                         "config" => config_vars})
-      Excon.stub({:method => :put, :path => "/v2/config", :body => body}) do |params|
+      body = Mortar::API::OkJson.encode(config_vars)
+      Excon.stub({:method => :put, :path => "/v2/config/my_project+needs+escaping", :body => body}) do |params|
         {:body => "", :status => 200}
       end
       response = @api.put_config_vars(project_name, config_vars)
@@ -43,10 +42,9 @@ describe Mortar::API do
     end
     
     it "gets config vars" do
-      project_name = "my_project"
-      Excon.stub({:method => :get, :path => "/v2/config"}) do |params|
-        {:body => Mortar::API::OkJson.encode({"project_name" => project_name, 
-                                              "config" => {"a" => "foo", "B" => "BAR"}}), 
+      project_name = "my_project needs escaping"
+      Excon.stub({:method => :get, :path => "/v2/config/my_project+needs+escaping"}) do |params|
+        {:body => Mortar::API::OkJson.encode({"config" => {"a" => "foo", "B" => "BAR"}}), 
          :status => 200}
       end
       response = @api.get_config_vars(project_name)
@@ -56,9 +54,11 @@ describe Mortar::API do
     end
     
     it "unset a config var" do
-      project_name = "my_project"
-      var_name = "MY_VAR needs escaping"
-      Excon.stub({:method => :delete, :path => "/v2/config/MY_VAR+needs+escaping"}) do |params|
+      project_name = "my_project needs escaping"
+      var_name = "MY_VAR"
+      Excon.stub({:method => :delete, 
+                  :path => "/v2/config/my_project+needs+escaping", 
+                  :body => Mortar::API::OkJson.encode({'key' => var_name})}) do |params|
         {:body => "", :status => 200}
       end
       response = @api.delete_config_var(project_name, var_name)

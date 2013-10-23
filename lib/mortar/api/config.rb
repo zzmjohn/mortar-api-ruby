@@ -19,35 +19,34 @@
 
 module Mortar
   class API
-    # PUT /vX/config
+    
+    # PUT /vX/config/:project_name
     def put_config_vars(project_name, config_vars)
-      body = {
-        'project_name' => project_name,
-        'config' => config_vars
-      }
       request(
         :expects  => 200,
         :method   => :put,
-        :path     => versioned_path("/config"),
-        :body     => json_encode(body)
+        :path     => versioned_path("/config/#{escape(project_name)}"),
+        :body     => json_encode(config_vars)
       )
     end
 
-    # GET /vX/config
+    # GET /vX/config/:project_name
     def get_config_vars(project_name)
       request(
         :expects  => 200,
         :method   => :get,
-        :path     => versioned_path("/config")
+        :path     => versioned_path("/config/#{escape(project_name)}")
       )
     end
 
-    # DELETE /v2/config/:config_var
+    # DELETE /vX/config/:project_name
     def delete_config_var(project_name, config_var)
+      body = {'key' => config_var}
       request(
         :expects => 200,
         :method  => :delete,
-        :path    => versioned_path("/config/#{escape(config_var)}")
+        :path    => versioned_path("/config/#{escape(project_name)}"),
+        :body    => json_encode(body)
       )
     end
   end
