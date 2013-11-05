@@ -61,7 +61,8 @@ module Mortar
       options = {
         :headers  => {},
         :host     => 'api.mortardata.com',
-        :scheme   => 'https'
+        :scheme   => 'https',
+        :ssl_version => 'SSLv3'
       }.merge(options)
       options[:headers] = {
         'Accept'                => 'application/json',
