@@ -34,6 +34,7 @@ module Mortar
     def get_fixture(fixture_id)
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/fixtures/#{fixture_id}")
       )

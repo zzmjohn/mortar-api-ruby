@@ -61,6 +61,7 @@ module Mortar
       options = {
         :headers  => {},
         :host     => 'api.mortardata.com',
+        :retry_limit => 5,
         :scheme   => 'https',
         :ssl_version => 'SSLv3'
       }.merge(options)

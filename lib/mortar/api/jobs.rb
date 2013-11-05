@@ -121,6 +121,7 @@ module Mortar
     def get_jobs(skip, limit)
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/jobs"),
         :query    => { :skip => skip, :limit => limit }
@@ -131,6 +132,7 @@ module Mortar
     def get_job(job_id)
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/jobs/#{job_id}")
       )
@@ -140,6 +142,7 @@ module Mortar
     def stop_job(job_id)
       request(
         :expects => 200,
+        :idempotent => true,
         :method  => :delete,
         :path    => versioned_path("/jobs/#{job_id}")
       )

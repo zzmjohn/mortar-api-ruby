@@ -24,6 +24,7 @@ module Mortar
     def put_config_vars(project_name, config_vars)
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :put,
         :path     => versioned_path("/config/#{escape(project_name)}"),
         :body     => json_encode(config_vars)
@@ -34,6 +35,7 @@ module Mortar
     def get_config_vars(project_name)
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/config/#{escape(project_name)}")
       )
@@ -44,6 +46,7 @@ module Mortar
       body = {'key' => config_var}
       request(
         :expects => 200,
+        :idempotent => true,
         :method  => :delete,
         :path    => versioned_path("/config/#{escape(project_name)}"),
         :body    => json_encode(body)

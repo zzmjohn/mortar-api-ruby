@@ -31,6 +31,7 @@ module Mortar
     def get_clusters()
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/clusters")
       )
@@ -40,6 +41,7 @@ module Mortar
       def stop_cluster(cluster_id)
         request(
           :expects => 200,
+          :idempotent => true,
           :method  => :delete,
           :path    => versioned_path("/clusters/#{cluster_id}")
         )

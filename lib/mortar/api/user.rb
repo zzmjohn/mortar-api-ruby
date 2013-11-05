@@ -25,6 +25,7 @@ module Mortar
     def get_user
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/user")
       )
