@@ -48,6 +48,7 @@ module Mortar
       exclude_result = options[:exclude_result] || false
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/illustrates/#{illustrate_id}"),
         :query    => {:exclude_result => exclude_result}

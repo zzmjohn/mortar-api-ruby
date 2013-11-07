@@ -33,6 +33,7 @@ module Mortar
     def get_projects()
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/projects")
       )
@@ -42,6 +43,7 @@ module Mortar
     def get_project(project_id)
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/projects/#{project_id}")
       )

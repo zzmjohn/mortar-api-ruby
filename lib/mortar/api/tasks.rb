@@ -30,6 +30,7 @@ module Mortar
     def get_task(task_id)
       request(
         :expects  => 200,
+        :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/tasks/#{task_id}")
       )

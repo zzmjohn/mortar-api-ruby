@@ -36,7 +36,7 @@ describe Mortar::API do
       email = "nobody@nowhere.com"
       api_key = "6db6Wm9ZUeCl0NVNdkhptksCh0T9i6bv1dYZXaKz"
       api = Mortar::API.new(:user => email, :api_key => api_key)
-      authorization = api.connection.connection[:headers]['Authorization']
+      authorization = api.connection.data[:headers]['Authorization']
       authorization.nil?.should be_false
       authorization.should == basic_auth_authorization_header(email, api_key)
     end
