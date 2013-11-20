@@ -89,6 +89,7 @@ module Mortar
     def post_job_new_cluster(project_name, script_name, git_ref, cluster_size, options={})
       cluster_type = options[:cluster_type].nil? ? Jobs::CLUSTER_TYPE__PERSISTENT : options[:cluster_type]
       notify_on_job_finish = options[:notify_on_job_finish].nil? ? true : options[:notify_on_job_finish]
+      use_spot_instances = options[:use_spot_instances].nil? ? false : options[:use_spot_instances]
       parameters = options[:parameters] || {}
       is_control_script = options[:is_control_script] || false
 
@@ -97,7 +98,8 @@ module Mortar
         "cluster_size" => cluster_size,
         "cluster_type" => cluster_type,
         "parameters" => parameters,
-        "notify_on_job_finish" => notify_on_job_finish
+        "notify_on_job_finish" => notify_on_job_finish,
+        "use_spot_instances" => use_spot_instances
       }
       if is_control_script
         body["controlscript_name"] = script_name
