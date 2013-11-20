@@ -64,6 +64,7 @@ describe Mortar::API do
                                          "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => true,
+                                         "use_spot_instances" => false,
                                          "pigscript_name" => pigscript_name
 })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
@@ -86,6 +87,7 @@ describe Mortar::API do
                                          "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => true,
+                                         "use_spot_instances" => false,
                                          "pigscript_name" => pigscript_name
 })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
@@ -95,7 +97,7 @@ describe Mortar::API do
       response.body['job_id'].should == job_id
     end
 
-    it "accepts notify_on_job_finish of false" do
+    it "accepts non-default params for notify_on_job_finish and use_spot_instances" do
       job_id = "7b93e4d3ab034188a0c2be418d3d24ed"
       project_name = "my_project"
       pigscript_name = "my_pigscript"
@@ -108,12 +110,15 @@ describe Mortar::API do
                                          "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => false,
+                                         "use_spot_instances" => true,
                                          "pigscript_name" => pigscript_name,
 })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'job_id' => job_id}), :status => 200}
       end
-      response = @api.post_job_new_cluster(project_name, pigscript_name, git_ref, cluster_size, :cluster_type => cluster_type, :notify_on_job_finish => false)
+      response = @api.post_job_new_cluster(project_name, pigscript_name, git_ref, cluster_size, 
+            :cluster_type => cluster_type, :notify_on_job_finish => false, 
+            :use_spot_instances => true)
       response.body['job_id'].should == job_id
     end
     
@@ -130,6 +135,7 @@ describe Mortar::API do
                                          "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => true,
+                                         "use_spot_instances" => false,
                                          "pigscript_name" => pigscript_name
                                         })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
@@ -152,6 +158,7 @@ describe Mortar::API do
                                          "cluster_type" => cluster_type,
                                          "parameters" => {},
                                          "notify_on_job_finish" => true,
+                                         "use_spot_instances" => false,
                                          "pigscript_name" => pigscript_name,
                                         })
       Excon.stub({:method => :post, :path => "/v2/jobs", :body => body}) do |params|
