@@ -70,11 +70,23 @@ describe Mortar::API do
     it "posts a project" do
       project_name = "my_new_project"
       project_id = "7b93e4d3ab034188a0c2be418d3d24ed"
-      body = Mortar::API::OkJson.encode({"project_name" => project_name})
+      body = Mortar::API::OkJson.encode({"project_name" => project_name, "is_private" => true})
       Excon.stub({:method => :post, :path => "/v2/projects", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'project_name' => project_name, "project_id" => project_id}), :status => 200}
       end
       response = @api.post_project(project_name)
+      response.body['project_id'].should == project_id
+      response.body['project_name'].should == project_name
+    end
+
+    it "posts a public project" do
+      project_name = "my_new_project"
+      project_id = "7b93e4d3ab034188a0c2be418d3d24ed"
+      body = Mortar::API::OkJson.encode({"project_name" => project_name, "is_private" => false})
+      Excon.stub({:method => :post, :path => "/v2/projects", :body => body}) do |params|
+        {:body => Mortar::API::OkJson.encode({'project_name' => project_name, "project_id" => project_id}), :status => 200}
+      end
+      response = @api.post_project(project_name, false)
       response.body['project_id'].should == project_id
       response.body['project_name'].should == project_name
     end
