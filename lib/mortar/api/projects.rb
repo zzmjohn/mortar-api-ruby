@@ -50,12 +50,16 @@ module Mortar
     end
     
     # POST /vX/projects
-    def post_project(project_name)
+    def post_project(project_name, is_private = true)
+      payload = {
+        "project_name" => project_name,
+        "is_private" => is_private
+      }
       request(
         :expects  => 200,
         :method   => :post,
         :path     => versioned_path("/projects"),
-        :body     => json_encode({"project_name" => project_name})
+        :body     => json_encode(payload)
       )
     end
     
