@@ -45,6 +45,7 @@ require "mortar/api/projects"
 require "mortar/api/user"
 require "mortar/api/tasks"
 require "mortar/api/config"
+require "mortar/api/s3"
 
 srand
 
