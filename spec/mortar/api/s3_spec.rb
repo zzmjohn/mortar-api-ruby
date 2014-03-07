@@ -26,13 +26,14 @@ describe Mortar::API do
   after(:each) do
     Excon.stubs.clear
   end
-  context "s3" do
+  context "s3 use default expire time" do
     it "gets a bunch of urls" do
       bucket = "bucket"
       key = "key"
       query = {
         :bucket => bucket,
-        :key => key
+        :key => key,
+        :expire_time => 120
       }
       urls= Array.new
       Excon.stub({:method => :get, :path => "/v2/s3", :query => query}) do |params|
@@ -40,6 +41,23 @@ describe Mortar::API do
       end
 
       response = @api.get_s3_urls(bucket, key)
+      response.body['urls'].should == urls
+      
+    end
+    it "gets a bunch of urls" do
+      bucket = "bucket"
+      key = "key"
+      query = {
+        :bucket => bucket,
+        :key => key,
+        :expire_time => 1000
+      }
+      urls= Array.new
+      Excon.stub({:method => :get, :path => "/v2/s3", :query => query}) do |params|
+        {:body => Mortar::API::OkJson.encode({'urls' => urls}), :status =>200}
+      end
+
+      response = @api.get_s3_urls(bucket, key, 1000)
       response.body['urls'].should == urls
       
     end

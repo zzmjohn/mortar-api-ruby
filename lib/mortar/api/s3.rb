@@ -22,13 +22,13 @@ module Mortar
   class API
 
     # GET /vX/s3
-    def get_s3_urls(bucket, key)
+    def get_s3_urls(bucket, key, expire_time=120)
       request(
         :expects  => 200,
         :idempotent => true,
         :method   => :get,
         :path     => versioned_path("/s3"),
-        :query    => {:bucket => bucket, :key => key}
+        :query    => {:bucket => bucket, :key => key, :expire_time => expire_time}
       )
     end
   end
