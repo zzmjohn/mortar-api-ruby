@@ -34,7 +34,7 @@ describe Mortar::API do
       illustrate_id = "7b93e4d3ab034188a0c2be418d3d24ed"
       project_name = "my_project"
       pigscript_name = "my_pigscript"
-      project_script_path = "pigscripts/my_pigscript/"
+      project_script_path = "pigscripts/my_pigscript"
       pigscript_alias = "my_alias"
       skip_pruning = false
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
