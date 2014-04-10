@@ -77,6 +77,10 @@ module Mortar
         body["pig_version"] = options[:pig_version]
       end
 
+      unless options[:project_script_path].nil?
+        body["project_script_path"] = options[:project_script_path]
+      end
+
       request(
         :expects  => 200,
         :method   => :post,
@@ -110,6 +114,10 @@ module Mortar
       #If no pig_version is set, leave it to server to figure out version.
       unless options[:pig_version].nil?
         body["pig_version"] = options[:pig_version]
+      end
+
+      unless options[:project_script_path].nil?
+        body["project_script_path"] = options[:project_script_path]
       end
 
       request(

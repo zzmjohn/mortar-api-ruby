@@ -34,6 +34,7 @@ describe Mortar::API do
       describe_id = "7b93e4d3ab034188a0c2be418d3d24ed"
       project_name = "my_project"
       pigscript_name = "my_pigscript"
+      project_script_path = "pigscripts/my_pigscript/"
       pigscript_alias = "my_alias"
       git_ref = "e20395b8b06fbf52e86665b0660209673f311d1a"
       params = {"key" => "value"}
@@ -41,12 +42,13 @@ describe Mortar::API do
                                          "pigscript_name" => pigscript_name,
                                          "alias" => pigscript_alias,
                                          "git_ref" => git_ref,
-                                         "parameters" => params
+                                         "parameters" => params,
+                                         "project_script_path" => project_script_path,
                                          })
       Excon.stub({:method => :post, :path => "/v2/describes", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'describe_id' => describe_id}), :status => 200}
       end
-      response = @api.post_describe(project_name, pigscript_name, pigscript_alias, git_ref, :parameters => params)
+      response = @api.post_describe(project_name, pigscript_name, pigscript_alias, git_ref, :parameters => params, :project_script_path => project_script_path)
       response.body['describe_id'].should == describe_id
     end
     
