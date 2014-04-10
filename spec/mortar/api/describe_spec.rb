@@ -40,10 +40,10 @@ describe Mortar::API do
       params = {"key" => "value"}
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
                                          "pigscript_name" => pigscript_name,
-                                         "project_script_path" => project_script_path,
                                          "alias" => pigscript_alias,
                                          "git_ref" => git_ref,
-                                         "parameters" => params
+                                         "parameters" => params,
+                                         "project_script_path" => project_script_path,
                                          })
       Excon.stub({:method => :post, :path => "/v2/describes", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'describe_id' => describe_id}), :status => 200}

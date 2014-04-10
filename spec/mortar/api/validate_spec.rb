@@ -39,9 +39,9 @@ describe Mortar::API do
       parameters = {"key" => "value"}
       body = Mortar::API::OkJson.encode({"project_name" => project_name,
                                          "pigscript_name" => pigscript_name,
-                                         "project_script_path" => project_script_path,
                                          "git_ref" => git_ref, 
-                                         "parameters" => parameters
+                                         "parameters" => parameters,
+                                         "project_script_path" => project_script_path,
                                          })
       Excon.stub({:method => :post, :path => "/v2/validates", :body => body}) do |params|
         {:body => Mortar::API::OkJson.encode({'validate_id' => validate_id}), :status => 200}
